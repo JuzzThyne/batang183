@@ -41,8 +41,8 @@ const Login = () => {
 
   return (
     <div className="relative w-full h-screen md:w-80 md:h-96 mx-auto overflow-hidden md:overflow-visible">
-      <div className="absolute w-80 h-80 md:w-40 md:h-40 bg-gradient-to-br from-blue-700 to-blue-500 rounded-full -left-40 -top-20 md:-left-20 md:-top-20"></div>
-      <div className="absolute w-80 h-80 md:w-40 md:h-40 bg-gradient-to-r from-red-500 to-yellow-500 rounded-full -right-20 -bottom-[200px] "></div>
+      <div className="hidden md:block absolute w-70 h-70 md:w-40 md:h-40 bg-gradient-to-br from-blue-700 to-blue-500 rounded-full -left-40 -top-20 md:-left-20 md:-top-20"></div>
+      <div className="hidden md:block absolute w-80 h-80 md:w-40 md:h-40 bg-gradient-to-r from-red-500 to-yellow-500 rounded-full -right-20 -bottom-[200px] "></div>
       {/* {error && <div style={{ color: 'red' }}>{error}</div>} */}
       <form onSubmit={handleLogin} className="absolute flex flex-col justify-center w-full h-screen md:w-80 md:h-[55vh] bg-opacity-10 bg-white bg-blur border-2 border-opacity-10 border-white md:rounded-2xl shadow-2xl p-10 overflow-hidden">
         <div className="flex justify-center items-center">
