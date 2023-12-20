@@ -13,6 +13,8 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [isAlertVisible, setIsAlertVisible] = useState(false); // New state for alert visibility
+
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -35,21 +37,28 @@ const Login = () => {
       dispatch(setToken(response.token));
       navigate("/dashboard"); // Change '/dashboard' to the desired route
       setError('');
+      setIsAlertVisible(false); // Hide the alert on successful login
     } catch (error) {
       setError(error.message || 'An error occurred during login');
+      setIsAlertVisible(true); // Show the alert on login error
     }
   };
-
+  const closeAlert = () => {
+    setIsAlertVisible(false);
+  };
   return (
     <div className="relative w-full h-screen md:w-80 md:h-96 mx-auto overflow-hidden md:overflow-visible">
       <div className="hidden md:block absolute w-70 h-70 md:w-40 md:h-40 bg-gradient-to-br from-blue-700 to-blue-500 rounded-full -left-40 -top-20 md:-left-20 md:-top-20"></div>
       <div className="hidden md:block absolute w-80 h-80 md:w-40 md:h-40 bg-gradient-to-r from-red-500 to-yellow-500 rounded-full -right-20 -bottom-[200px] "></div>
-      {/* {error && <div style={{ color: 'red' }}>{error}</div>} */}
       <form onSubmit={handleLogin} className="absolute flex flex-col justify-center w-full h-screen md:w-80 md:h-[55vh] bg-opacity-10 bg-white bg-blur border-2 border-opacity-10 border-white md:rounded-2xl shadow-2xl p-10 overflow-hidden">
         <div className="flex justify-center items-center">
           <img src={Batang183} alt="" className="w-72 h-72 md:w-40 md:h-40 pt-2" />
         </div>
-        {error && <AlertComponent alertData={error}/>}
+        {error && <AlertComponent
+            alertData={error}
+            isVisible={isAlertVisible}
+            onClose={closeAlert}
+          />}
         {/* <h3 className="text-2xl font-semibold text-center text-white mb-6">BATANG 183</h3> */}
         <label
           htmlFor="username"
