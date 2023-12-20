@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { loginUser } from '../api/authService.js';
 import { setToken } from '../redux/authSlice.js';
 import { useNavigate } from 'react-router-dom';
+import AlertComponent from "../reusable-components/AlertComponent.jsx";
 
 
 const Login = () => {
@@ -48,7 +49,7 @@ const Login = () => {
         <div className="flex justify-center items-center">
           <img src={Batang183} alt="" className="w-72 h-72 md:w-40 md:h-40 pt-2" />
         </div>
-        {error && <div className="text-[#FF0000] text-center text-base pt-8 md:text-sm md:pt-4">{error}</div>}
+        {error && <AlertComponent alertData={error}/>}
         {/* <h3 className="text-2xl font-semibold text-center text-white mb-6">BATANG 183</h3> */}
         <label
           htmlFor="username"
