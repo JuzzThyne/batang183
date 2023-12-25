@@ -1,31 +1,65 @@
-// features/auth/authSlice.js
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-// Load the token from localStorage if it exists
-const storedToken = localStorage.getItem('authToken');
 
-export const authSlice = createSlice({
-  name: 'auth',
-  initialState: {
-    token: storedToken, // Use the stored token if available
-    isAuthenticated: !!storedToken,
-  },
-  reducers: {
-    setToken: (state, action) => {
-      state.token = action.payload;
-      state.isAuthenticated = !!action.payload;
-      // Save the token to localStorage
-      localStorage.setItem('authToken', action.payload);
-    },
-    clearToken: (state) => {
-      state.token = null;
-      state.isAuthenticated = false;
-      // Remove the token from localStorage
-      localStorage.removeItem('authToken');
-    },
-  },
+// const API_URL = 'http://localhost:5555/';
+const API_URL = 'https://batang183-backend.vercel.app/';
+
+export const loginAsync = createAsyncThunk('adminAuth/login', async (credentials) => {
+  try {
+    const response = await axios.post(`${API_URL}admin/login`, credentials, {withCredentials:true} );
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
 });
 
-export const { setToken, clearToken } = authSlice.actions;
+export const logoutAsync = createAsyncThunk('adminAuth/logout', async (token) => {
+  try {
+    const response = await axios.post(`${API_URL}admin/logout`,null , {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`, // Note the "Bearer" prefix
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+});
+
+const authSlice = createSlice({
+  name: 'adminAuth',
+  initialState: {
+    token: localStorage.getItem('token') || null,
+    error: null,
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(loginAsync.fulfilled, (state, action) => {
+        state.token = action.payload.token;
+        state.error = null;
+        // Set the isAuthenticated cookie
+        localStorage.setItem('token', action.payload.token);
+      })
+      .addCase(loginAsync.rejected, (state, action) => {
+        state.token = null;
+        state.error = action.error.message;
+
+        // Remove the token from localStorage
+        localStorage.removeItem('token');
+      })
+      .addCase(logoutAsync.fulfilled, (state, action) => {
+        state.error = action.payload.message;
+
+        // Remove the token from localStorage
+        localStorage.removeItem('token');
+      })
+      .addCase(logoutAsync.rejected, (state, action) => {
+        state.error = action.error.message;
+      });
+  },
+});
 
 export default authSlice.reducer;

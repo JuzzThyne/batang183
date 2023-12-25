@@ -1,28 +1,45 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
+import Login from "./views/Login";
+import AdminComponents from "./components/AdminComponents";
+import NotFound from "./views/NotFound";
+import UserComponents from "./components/UserComponents";
+import Dashboard from "./views/Dashboard";
 import App from "./App";
-import Login from "./components/Login";
-import Dashboard from "./components/Dashboard";
+import AccountSetting from "./views/AccountSetting";
 
 const router = createBrowserRouter(
     [
         {
             path: '/',
-            element: <App/>,
+            element: <UserComponents/>,
             children: [
-                
                 {
                     path: '/',
-                    element: <Navigate to='/login'/>
+                    element: <Navigate to='/dashboard'/>
                 },
                 {
-                    path: '/login',
-                    element: <Login/>,
+                    path: '/dashboard',
+                    element: <Dashboard/>,
                 }, 
+                {
+                    path: '/account',
+                    element: <AccountSetting/>,
+                },
             ]
         },
         {
-            path: '/dashboard',
-            element: <Dashboard/>,
+            path: '/',
+            element: <AdminComponents/>,
+            children: [
+                {
+                    path: '/login',
+                    element: <Login/>,
+                },
+            ]
+        },
+        {
+            path: '*',
+            element: <NotFound/>,
         },
     ]
 )

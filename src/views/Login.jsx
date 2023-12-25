@@ -1,26 +1,18 @@
 
 import Batang183 from "../assets/batang183.png";
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { loginUser } from '../api/authService.js';
-import { setToken } from '../redux/authSlice.js';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginAsync } from '../redux/authSlice.js';
 import AlertComponent from "../reusable-components/AlertComponent.jsx";
 
-
 const Login = () => {
-
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
+  const error = useSelector((state) => state.auth.error);
   const [isAlertVisible, setIsAlertVisible] = useState(false); // New state for alert visibility
-
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
-  const [error, setError] = useState('');
-
   // handle input changes
   const handleInputChange = (e) => {
     setFormData({
@@ -28,18 +20,13 @@ const Login = () => {
       [e.target.name]: e.target.value,
     });
   };
-
   const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await loginUser(formData);
-      dispatch(setToken(response.token));
-      navigate("/dashboard"); // Change '/dashboard' to the desired route
-      setError('');
+      dispatch(loginAsync(formData));
+      navigate("/"); // Change '/dashboard' to the desired route
       setIsAlertVisible(false); // Hide the alert on successful login
     } catch (error) {
-      setError(error.message || 'An error occurred during login');
       setIsAlertVisible(true); // Show the alert on login error
     }
   };
