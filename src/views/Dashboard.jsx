@@ -5,21 +5,23 @@ import { logoutAsync } from '../redux/authSlice';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
-  const error = useSelector((state) => state.auth.error);
+
   const handleLogout = () => {
     try {
       dispatch(logoutAsync(token));
-      navigate("/login"); // Change '/dashboard' to the desired route
+      window.location.reload();
     } catch (error) {
+      // Handle error if needed
     }
   };
-  return <div>
-    {error}
-    <h1>DASHBOARD</h1>
-    <button onClick={handleLogout}>logout</button>
-  </div>;
+
+  return (
+    <div>
+      <h1>DASHBOARD</h1>
+      <button onClick={handleLogout}>Logout</button>
+    </div>
+  );
 };
 
 export default Dashboard;

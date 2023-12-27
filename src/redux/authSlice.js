@@ -31,7 +31,7 @@ export const logoutAsync = createAsyncThunk('adminAuth/logout', async (token) =>
 const authSlice = createSlice({
   name: 'adminAuth',
   initialState: {
-    token: localStorage.getItem('token') || null,
+    token: sessionStorage.getItem('SecretToken') || null,
     error: null,
   },
   reducers: {},
@@ -41,20 +41,20 @@ const authSlice = createSlice({
         state.token = action.payload.token;
         state.error = null;
         // Set the isAuthenticated cookie
-        localStorage.setItem('token', action.payload.token);
+        sessionStorage.setItem('SecretToken', action.payload.token);
       })
       .addCase(loginAsync.rejected, (state, action) => {
         state.token = null;
         state.error = action.error.message;
 
         // Remove the token from localStorage
-        localStorage.removeItem('token');
+        sessionStorage.removeItem('SecretToken');
       })
       .addCase(logoutAsync.fulfilled, (state, action) => {
         state.error = action.payload.message;
 
         // Remove the token from localStorage
-        localStorage.removeItem('token');
+        sessionStorage.removeItem('SecretToken');
       })
       .addCase(logoutAsync.rejected, (state, action) => {
         state.error = action.error.message;
