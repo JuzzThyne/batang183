@@ -51,10 +51,10 @@ const authSlice = createSlice({
         sessionStorage.removeItem('SecretToken');
       })
       .addCase(logoutAsync.fulfilled, (state, action) => {
-        state.error = action.payload.message;
-
         // Remove the token from localStorage
         sessionStorage.removeItem('SecretToken');
+        state.error = action.payload.message;
+
       })
       .addCase(logoutAsync.rejected, (state, action) => {
         state.error = action.error.message;
