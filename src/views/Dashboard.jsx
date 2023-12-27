@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useSelector, useDispatch } from 'react-redux';
-import { logoutAsync } from '../redux/authSlice';
+import { logoutAsync } from '../redux/authSlice.js';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
