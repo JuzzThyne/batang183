@@ -11,6 +11,7 @@ const Dashboard = () => {
   const handleLogout = () => {
     try {
       dispatch(logoutAsync(token));
+      sessionStorage.removeItem('SecretToken');
       window.location.reload();
     } catch (error) {
       // Handle error if needed
