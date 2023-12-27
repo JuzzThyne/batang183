@@ -32,10 +32,14 @@ const authSlice = createSlice({
   initialState: {
     token: sessionStorage.getItem('SecretToken') || null,
     error: null,
+    isLoading: false,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(loginAsync.pending, (state) => {
+        state.isLoading = true;
+      })
       .addCase(loginAsync.fulfilled, (state, action) => {
         state.token = action.payload.token;
         state.error = null;

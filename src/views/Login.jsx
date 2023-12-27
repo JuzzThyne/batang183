@@ -7,6 +7,7 @@ import AlertComponent from "../reusable-components/AlertComponent.jsx";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.auth.isLoading);
   const error = useSelector((state) => state.auth.error);
   const [isAlertVisible, setIsAlertVisible] = useState(false); // New state for alert visibility
   const [formData, setFormData] = useState({
@@ -41,6 +42,7 @@ const Login = () => {
         <div className="flex justify-center items-center">
           <img src={Batang183} alt="" className="w-72 h-72 md:w-40 md:h-40 pt-2" />
         </div>
+        {isLoading && <p> Loading... </p>}
         {error && <AlertComponent
             alertData={error}
             isVisible={isAlertVisible}
