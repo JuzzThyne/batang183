@@ -6,6 +6,7 @@ import { logoutAsync } from '../redux/authSlice';
 const Dashboard = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
+  const error = useSelector((state) => state.auth.error);
 
   const handleLogout = () => {
     try {
@@ -18,6 +19,7 @@ const Dashboard = () => {
 
   return (
     <div>
+      <p>{error}</p>
       <h1>DASHBOARD</h1>
       <button onClick={handleLogout}>Logout</button>
     </div>
