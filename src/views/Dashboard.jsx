@@ -11,7 +11,7 @@ const Dashboard = () => {
   const handleLogout = () => {
     try {
       dispatch(logoutAsync(token));
-      // window.location.reload();
+      window.location.reload();
     } catch (error) {
       // Handle error if needed
     }
