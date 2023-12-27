@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutAsync } from '../redux/authSlice.js';
 
@@ -8,13 +7,13 @@ const Dashboard = () => {
   const token = useSelector((state) => state.auth.token);
   const error = useSelector((state) => state.auth.error);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     try {
-      dispatch(logoutAsync(token));
-      sessionStorage.removeItem('SecretToken');
+      await dispatch(logoutAsync(token));
       window.location.reload();
     } catch (error) {
       // Handle error if needed
+      console.error("Logout failed:", error);
     }
   };
 
