@@ -42,11 +42,13 @@ const authSlice = createSlice({
       })
       .addCase(loginAsync.fulfilled, (state, action) => {
         state.token = action.payload.token;
+        state.isLoading = false;
         state.error = null;
         // Set the isAuthenticated cookie
         sessionStorage.setItem('SecretToken', action.payload.token);
       })
       .addCase(loginAsync.rejected, (state, action) => {
+        state.isLoading = false;
         state.token = null;
         state.error = action.error.message;
 
