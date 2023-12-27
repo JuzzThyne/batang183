@@ -19,7 +19,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <p>{error}</p>
+      <p>{error && {error}}</p>
       <h1>DASHBOARD</h1>
       <button onClick={handleLogout}>Logout</button>
     </div>
