@@ -2,12 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 
-const API_URL = 'http://localhost:5555/';
-// const API_URL = 'https://batang183-backend.vercel.app/';
+// const API_URL = 'http://localhost:5555/';
+const API_URL = 'https://batang183-backend.vercel.app/';
 
 export const loginAsync = createAsyncThunk('adminAuth/login', async (credentials) => {
   try {
-    const response = await axios.post(`${API_URL}admin/login`, credentials );
+    const response = await axios.post(`${API_URL}admin/login`, credentials, {withCredentials:true} );
     return response.data;
   } catch (error) {
     throw error.response.data;
@@ -16,7 +16,12 @@ export const loginAsync = createAsyncThunk('adminAuth/login', async (credentials
 
 export const logoutAsync = createAsyncThunk('adminAuth/logout', async (token) => {
   try {
-    const response = await axios.post(`${API_URL}admin/logout`,null );
+    const response = await axios.post(`${API_URL}admin/logout`,null , {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${token}`, // Note the "Bearer" prefix
+      },
+    });
     return response.data;
   } catch (error) {
     throw error.response.data;
