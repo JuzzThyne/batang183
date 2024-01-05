@@ -2,7 +2,7 @@ import React from 'react';
 
 const ProgressBar = () => {
   return (
-    <div className="progress w-full" style={progressStyles}>
+    <div className="progress w-full absolute md:top-[200px]" style={progressStyles}>
     </div>
   );
 };
