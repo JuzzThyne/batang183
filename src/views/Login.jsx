@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAsync } from '../redux/authSlice.js';
 import AlertComponent from "../reusable-components/AlertComponent.jsx";
+import ProgressBar from "../reusable-components/ProgressBar.jsx";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const Login = () => {
     setIsAlertVisible(false);
   };
   return (
+    
     <div className="relative w-full h-screen md:w-80 md:h-96 mx-auto overflow-hidden md:overflow-visible">
       <div className="hidden md:block absolute w-70 h-70 md:w-40 md:h-40 bg-gradient-to-br from-blue-700 to-blue-500 rounded-full -left-40 -top-20 md:-left-20 md:-top-20"></div>
       <div className="hidden md:block absolute w-80 h-80 md:w-40 md:h-40 bg-gradient-to-r from-red-500 to-yellow-500 rounded-full -right-20 -bottom-[200px] "></div>
@@ -42,13 +44,14 @@ const Login = () => {
         <div className="flex justify-center items-center">
           <img src={Batang183} alt="" className="w-72 h-72 md:w-40 md:h-40 pt-2" />
         </div>
-        {isLoading && <p> Loading... </p>}
+        {isLoading && <ProgressBar/>}
         {error && <AlertComponent
             alertData={error}
             isVisible={isAlertVisible}
             onClose={closeAlert}
           />}
         {/* <h3 className="text-2xl font-semibold text-center text-white mb-6">BATANG 183</h3> */}
+        
         <label
           htmlFor="username"
           className="block text-white text-base font-semibold mt-6"
@@ -83,6 +86,7 @@ const Login = () => {
           Log In
         </button>
       </form>
+      
     </div>
   );
 };
