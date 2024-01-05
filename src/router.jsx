@@ -4,7 +4,6 @@ import AdminComponents from "./components/AdminComponents";
 import NotFound from "./views/NotFound";
 import UserComponents from "./components/UserComponents";
 import Dashboard from "./views/Dashboard";
-import App from "./App";
 import AccountSetting from "./views/AccountSetting";
 
 const router = createBrowserRouter(
