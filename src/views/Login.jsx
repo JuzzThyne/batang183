@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginAsync } from '../redux/authSlice.js';
 import AlertComponent from "../reusable-components/AlertComponent.jsx";
 import ProgressBar from "../reusable-components/ProgressBar.jsx";
-import Spinner from "../reusable-components/Spinner.jsx";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -41,6 +40,7 @@ const Login = () => {
     <div className="relative w-full h-screen md:w-80 md:h-96 mx-auto overflow-hidden md:overflow-visible">
       <div className="hidden md:block absolute w-70 h-70 md:w-40 md:h-40 bg-gradient-to-br from-blue-700 to-blue-500 rounded-full -left-40 -top-20 md:-left-20 md:-top-20"></div>
       <div className="hidden md:block absolute w-80 h-80 md:w-40 md:h-40 bg-gradient-to-r from-red-500 to-yellow-500 rounded-full -right-20 -bottom-[200px] "></div>
+      <ProgressBar/>
       {isLoading && <ProgressBar/>}
       <form onSubmit={handleLogin} className="absolute flex flex-col justify-center w-full h-screen md:w-80 md:h-[55vh] bg-opacity-10 bg-white bg-blur border-2 border-opacity-10 border-white md:rounded-2xl shadow-2xl p-10 overflow-hidden">
         <div className="flex justify-center items-center">
@@ -83,9 +83,8 @@ const Login = () => {
           onChange={handleInputChange}
           className="block w-full h-12 bg-opacity-30 bg-white rounded-md p-2 mt-2 text-base font-light"
         />
-        <button type='submit' className="w-full mt-10 bg-white text-black py-3 md:mb-3 text-xl font-semibold rounded-md cursor-pointer flex justify-center items-center">
-          {isLoading && <Spinner/>}
-          {!isLoading && <p>Log In</p>}
+        <button type='submit' className="w-full mt-10 bg-white text-black py-3 md:mb-3 text-xl font-semibold rounded-md cursor-pointer">
+          Log In
         </button>
       </form>
     </div>
