@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUsers } from '../redux/userSlice';
+import Spinner from '../reusable-components/Spinner';
 
 const Dashboard = () => {
     const dispatch = useDispatch();
@@ -39,12 +40,13 @@ const Dashboard = () => {
                 </tr>
               </thead>
               <tbody>
-                {
-                  isLoading && <p>Loading ...</p>
-                }
-                 {
-                 error && <p>Error: {error}</p>
-                 }
+                {isLoading && (
+                    <tr>
+                      <td colSpan="5" className="text-center">
+                        <Spinner />
+                      </td>
+                    </tr>
+                  )}
                 {users && users.map((user) => (
                   <tr key={user._id} className="hover:bg-gray-50">
                     <td className="py-2 px-4 border">{`${user.first_name} ${user.middle_name} ${user.last_name}`}</td>
@@ -59,6 +61,7 @@ const Dashboard = () => {
                 ))}
               </tbody>
             </table>
+            
           </div>
         </div>
       </main>
