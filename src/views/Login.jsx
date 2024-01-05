@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginAsync } from '../redux/authSlice.js';
 import AlertComponent from "../reusable-components/AlertComponent.jsx";
 import ProgressBar from "../reusable-components/ProgressBar.jsx";
+import Spinner from "../reusable-components/Spinner.jsx";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -82,8 +83,9 @@ const Login = () => {
           onChange={handleInputChange}
           className="block w-full h-12 bg-opacity-30 bg-white rounded-md p-2 mt-2 text-base font-light"
         />
-        <button type='submit' className="w-full mt-10 bg-white text-black py-3 md:mb-3 text-xl font-semibold rounded-md cursor-pointer">
-          Log In
+        <button type='submit' className="w-full mt-10 bg-white text-black py-3 md:mb-3 text-xl font-semibold rounded-md cursor-pointer flex justify-center items-center">
+          {isLoading && <Spinner/>}
+          {!isLoading && <p>Log In</p>}
         </button>
       </form>
     </div>
