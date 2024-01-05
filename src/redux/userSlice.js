@@ -5,9 +5,9 @@ import axios from 'axios';
 // const API_URL = 'http://localhost:5555/';
 const API_URL = 'https://batang183-backend.vercel.app/';
 
-export const fetchUsers = createAsyncThunk('userAuth/user', async (token) => {
+export const fetchUsers = createAsyncThunk('userAuth/user', async ({searchTerm, token}) => {
   try {
-    const response = await axios.post(`${API_URL}user`,null , {
+    const response = await axios.post(`${API_URL}user`, { searchTerm } , {
       headers: {
         Authorization: `Bearer ${token}`, // Note the "Bearer" prefix
       },

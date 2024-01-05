@@ -49,7 +49,7 @@ const UserComponents = () => {
       <header className="bg-[#004643] text-white py-2">
         <div className="container mx-auto flex justify-between">
           <h1 className="text-2xl font-semibold p-2">Josephine Yarning</h1>
-          <button onClick={handleLogout}>Logout</button>
+          <button onClick={handleLogout} className="px-6">Logout</button>
         </div>
       </header>
       {/* main content */}
