@@ -1,21 +1,21 @@
+// Dashboard.js
+
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "../redux/userSlice";
+import EditUser from "./EditUser";
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
+  const { users, isLoading, currentPage, totalPages } = useSelector((state) => state.user);
   const token = useSelector((state) => state.auth.token);
-  // Using the token from the auth slice
-  useEffect(() => {
-    dispatch(fetchUsers({ searchTerm: searchTerm, token }));
-  }, [dispatch, searchTerm, token]);
-
-  const users = useSelector((state) => state.user.users);
-  const isLoading = useSelector((state) => state.user.loading);
-
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    dispatch(fetchUsers({ searchTerm, token }));
+  }, [dispatch, searchTerm, token]);
 
   const handleEdit = (userId) => {
     setSelectedUserId(userId);
@@ -62,7 +62,7 @@ const Dashboard = () => {
                 {isLoading && (
                   <tr>
                     <td colSpan="5" className="text-center">
-                      No Data Found
+                      Loading...
                     </td>
                   </tr>
                 )}
@@ -96,18 +96,34 @@ const Dashboard = () => {
                     </tr>
                   ))}
               </tbody>
-              {/* Modal */}
-              {isModalOpen && (
-                <div className="fixed inset-0 flex items-center justify-center">
-                  <div className="absolute inset-0 bg-gray-900 opacity-50"></div>
-                  <div className="bg-white p-4 md:p-8 z-10 rounded-lg">
-                    {/* Your modal content here */}
-                    <p>Edit User with ID: {selectedUserId}</p>
-                    <button onClick={handleCloseModal}>Close Modal</button>
-                  </div>
-                </div>
-              )}
             </table>
+            {/* Modal */}
+            {isModalOpen && (
+              <EditUser
+                selectedUserId={selectedUserId}
+                handleCloseModal={handleCloseModal}
+              />
+            )}
+          </div>
+
+          <div className="flex justify-between my-4">
+            <div>
+              <span className="mr-2">Page {currentPage} of {totalPages}</span>
+              <button
+                className="px-2 py-1 bg-blue-500 text-white rounded-md"
+                disabled={currentPage === 1}
+                onClick={() => dispatch(fetchUsers({ searchTerm, token, page: currentPage - 1 }))}
+              >
+                Previous
+              </button>
+              <button
+                className="px-2 py-1 ml-2 bg-blue-500 text-white rounded-md"
+                disabled={currentPage === totalPages}
+                onClick={() => dispatch(fetchUsers({ searchTerm, token, page: currentPage + 1 }))}
+              >
+                Next
+              </button>
+            </div>
           </div>
         </div>
       </main>
