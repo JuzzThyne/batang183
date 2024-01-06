@@ -27,19 +27,19 @@ const UserCard = ({
         />
       </div>
       <div className="w-full py-1 md:py-2">
-        <p className="text-[14px] md:text-5xl">{fullname}</p>
+        <p className="text-[14px] md:text-4xl font-semibold text-green-400">{fullname}</p>
         <div className="flex flex-col">
           <div className="flex gap-2 justify-start items-center">
-            <img src={eye} alt="" className="w-[11px] h-[11px]" />
+            <img src={mapPin} alt="" className="w-[11px] h-[11px] md:w-[20px] md:h-[20px]" />
             <p className="text-[11px] md:text-xl">{address}</p>
           </div>
           <div className="flex gap-8">
             <div className="flex gap-2 justify-start items-center">
-              <img src={eye} alt="" className="w-[11px] h-[11px]" />
+              <img src={user} alt="" className="w-[11px] h-[11px] md:w-[20px] md:h-[20px]" />
               <p className="text-[11px] md:text-xl">{gender}</p>
             </div>
             <div className="flex gap-2 justify-start items-center">
-              <img src={eye} alt="" className="w-[11px] h-[11px]" />
+              <img src={tag} alt="" className="w-[11px] h-[11px] md:w-[20px] md:h-[20px]" />
               <p className="text-[11px] md:text-xl">{precinctNumber}</p>
             </div>
           </div>
@@ -47,7 +47,7 @@ const UserCard = ({
       </div>
       <div className="p-6">
         <button className="h-full" onClick={onViewClick}>
-          <img src={eye} alt="" className="w-[50px]" />
+          <img src={eye} alt="" className="w-[40px] md:w-[50px]" />
         </button>
       </div>
     </div>

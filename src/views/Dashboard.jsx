@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "../redux/userSlice";
 import EditUser from "./EditUser";
 import UserCard from "../reusable-components/UserCard";
-import eye from "../assets/eye.svg";
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -44,7 +43,7 @@ const Dashboard = () => {
           <div className="flex py-2 pb-10">
             <input
               type="text"
-              className="border w-full"
+              className="border w-full border-teal-400 rounded-full px-4 py-2 md:py-4 text-lg"
               placeholder="Search"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -110,7 +109,6 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        
       </main>
     </>
   );
