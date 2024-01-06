@@ -14,42 +14,45 @@ const UserCard = ({
   onViewClick,
 }) => {
   return (
-    <div className="flex h-auto justify-between overflow-hidden rounded-xl bg-green-300 shadow-xl transition duration-300 hover:scale-105">
-      <div className="w-1/4 flex justify-center items-center m-2">
+    <>
+    <div className="w-full border-t-slate-500 border">
+
+    </div>
+    <div className="flex gap-1 md:gap-8 h-20 md:h-40 justify-between border-b-slate-500 border border-l-0 border-r-0 items-center">
+      <div className="flex justify-center items-center">
         <img
-          src={profileImageUrl || defaultPhoto} // Placeholder image URL
+          src={profileImageUrl || defaultPhoto}
           alt="Profile"
-          className="w-20 h-20 md:w-40 md:h-40 rounded-full"
+          className="w-8 h-8 md:w-16 md:h-16 rounded-full m-2"
         />
       </div>
-      <div className="flex flex-col w-3/4 justify-center md:px-1">
-        <p className="text-2xl md:text-5xl py-4 md:py-2 text-red-600 font-bold overflow-ellipsis">
-          {fullname}
-        </p>
+      <div className="w-full py-1 md:py-2">
+        <p className="text-[14px] md:text-5xl">{fullname}</p>
         <div className="flex flex-col">
           <div className="flex gap-2 justify-start items-center">
-            <img src={mapPin} alt="" className="" />
-            <p className="text-xs md:text-lg overflow-hidden">{address}</p>
+            <img src={eye} alt="" className="w-[11px] h-[11px]" />
+            <p className="text-[11px] md:text-xl">{address}</p>
           </div>
-          <div className="flex gap-2 justify-start items-center">
-            <img src={user} alt="" />
-            <p className="text-xs md:text-lg overflow-hidden">{gender}</p>
-          </div>
-          <div className="flex gap-2 justify-start items-center">
-            <img src={tag} alt="" />
-            <p className="text-xs md:text-lg overflow-hidden">{precinctNumber}</p>
+          <div className="flex gap-8">
+            <div className="flex gap-2 justify-start items-center">
+              <img src={eye} alt="" className="w-[11px] h-[11px]" />
+              <p className="text-[11px] md:text-xl">{gender}</p>
+            </div>
+            <div className="flex gap-2 justify-start items-center">
+              <img src={eye} alt="" className="w-[11px] h-[11px]" />
+              <p className="text-[11px] md:text-xl">{precinctNumber}</p>
+            </div>
           </div>
         </div>
       </div>
-      <div className="flex justify-center w-40 items-center">
-        <button
-          onClick={onViewClick}
-          className="w-full text-2xl flex justify-center transform hover:scale-110 transition duration-300 item"
-        >
-          <img src={eye} alt="" className="w-10 h-10" />
+      <div className="p-6">
+        <button className="h-full" onClick={onViewClick}>
+          <img src={eye} alt="" className="w-[50px]" />
         </button>
       </div>
     </div>
+    </>
+    
   );
 };
 

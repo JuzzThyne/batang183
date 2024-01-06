@@ -71,7 +71,7 @@ const UserComponents = () => {
             </nav>
           </aside>
         </div>
-        <div className="w-full md:w-3/4 bg-white p-4 md:p-8">
+        <div className="w-full md:w-3/4 bg-white md:p-8">
           <Outlet />
         </div>
       </main>

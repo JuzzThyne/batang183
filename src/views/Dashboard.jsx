@@ -5,11 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "../redux/userSlice";
 import EditUser from "./EditUser";
 import UserCard from "../reusable-components/UserCard";
+import eye from "../assets/eye.svg";
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
-  const { users, isLoading, currentPage, totalPages } = useSelector((state) => state.user);
+  const { users, isLoading, currentPage, totalPages } = useSelector(
+    (state) => state.user
+  );
   const token = useSelector((state) => state.auth.token);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -49,14 +52,12 @@ const Dashboard = () => {
           </div>
 
           <div className="overflow">
-            {isLoading && (
-              <div className="text-center">Loading...</div>
-            )}
+            {isLoading && <div className="text-center">Loading...</div>}
             {!isLoading && (users === null || users.length === 0) && (
               <div className="text-center">No Data Found</div>
             )}
             {!isLoading && users && (
-              <div className="grid grid-cols-1 gap-4">
+              <div className="grid grid-cols-1">
                 {users.map((user) => (
                   <UserCard
                     key={user._id}
@@ -81,24 +82,35 @@ const Dashboard = () => {
 
           <div className="flex justify-between my-4">
             <div>
-              <span className="mr-2">Page {currentPage} of {totalPages}</span>
+              <span className="mr-2">
+                Page {currentPage} of {totalPages}
+              </span>
               <button
                 className="px-2 py-1 bg-blue-500 text-white rounded-md"
                 disabled={currentPage === 1}
-                onClick={() => dispatch(fetchUsers({ searchTerm, token, page: currentPage - 1 }))}
+                onClick={() =>
+                  dispatch(
+                    fetchUsers({ searchTerm, token, page: currentPage - 1 })
+                  )
+                }
               >
                 Previous
               </button>
               <button
                 className="px-2 py-1 ml-2 bg-blue-500 text-white rounded-md"
                 disabled={currentPage === totalPages}
-                onClick={() => dispatch(fetchUsers({ searchTerm, token, page: currentPage + 1 }))}
+                onClick={() =>
+                  dispatch(
+                    fetchUsers({ searchTerm, token, page: currentPage + 1 })
+                  )
+                }
               >
                 Next
               </button>
             </div>
-          </div>    
+          </div>
         </div>
+        
       </main>
     </>
   );
