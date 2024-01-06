@@ -15,10 +15,7 @@ const UserCard = ({
 }) => {
   return (
     <>
-    <div className="w-full border-t-slate-500 border">
-
-    </div>
-    <div className="flex gap-1 md:gap-8 h-20 md:h-40 justify-between border-b-slate-500 border border-l-0 border-r-0 items-center">
+    <div className="flex gap-1 md:gap-8 h-20 md:h-40 justify-between border-t-slate-500 border border-b-0 border-l-0 border-r-0 items-center">
       <div className="flex justify-center items-center">
         <img
           src={profileImageUrl || defaultPhoto}
