@@ -65,7 +65,6 @@ const Dashboard = () => {
                     gender={user.gender}
                     precinctNumber={user.precinct_number}
                     onViewClick={() => handleEdit(user._id)}
-                    onDelete={() => handleDelete(user._id)}
                   />
                 ))}
               </div>

@@ -17,6 +17,22 @@ export const fetchUsers = createAsyncThunk('userAuth/fetchUsers', async ({ searc
   }
 });
 
+export const getSingleUser = createAsyncThunk('userAuth/getUser', async ({ userId, token }) => {
+  try {
+    const response = await axios.get(`${API_URL}user/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log('Response:', response);
+    return response.data;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error.response.data;
+  }
+});
+
+
 const userSlice = createSlice({
   name: 'userAuth',
   initialState: {
@@ -24,6 +40,7 @@ const userSlice = createSlice({
     users: null,
     error: null,
     isLoading: false,
+    singleUser:null,
     currentPage: 1,
     totalPages: 1,
   },
@@ -42,6 +59,18 @@ const userSlice = createSlice({
         state.totalPages = action.payload.totalPages;
       })
       .addCase(fetchUsers.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+      .addCase(getSingleUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getSingleUser.fulfilled, (state, action) => {
+        state.singleUser = action.payload.data;
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(getSingleUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       });
