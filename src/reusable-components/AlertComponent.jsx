@@ -1,13 +1,35 @@
 import React, { useState } from 'react';
 
-const AlertComponent = ({ alertData, isVisible, onClose }) => {
+const AlertComponent = ({ alertData, isVisible, onClose, color = 'red' }) => {
+  const getColorClasses = () => {
+    if (color === 'red') {
+      return {
+        backgroundColor: 'bg-red-100',
+        borderColor: 'border-red-400',
+        textColor: 'text-red-700',
+      };
+    } else {
+      // Add more conditions for other colors if needed
+      return {
+        backgroundColor: 'bg-green-100',
+        borderColor: 'border-green-400',
+        textColor: 'text-green-700',
+      };
+    }
+  };
+
+  const colorClasses = getColorClasses();
+
   return (
     <>
       {isVisible && (
-        <div className="bg-red-100 border border-red-400 mt-4 text-red-700 px-2 py-2 rounded relative" role="alert">
+        <div
+          className={`border ${colorClasses.backgroundColor} ${colorClasses.borderColor} mt-4 ${colorClasses.textColor} px-2 py-2 rounded relative`}
+          role="alert"
+        >
           <span className="block sm:inline sm:text:xs md:text-xs">{alertData}</span>
           <span className="absolute top-0 bottom-0 right-0 px-2 py-2" onClick={onClose} role="button">
-            <svg className="fill-current h-6 w-6 text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+            <svg className={`fill-current h-6 w-6 ${colorClasses.textColor}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
               <title>Close</title>
               <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/>
             </svg>

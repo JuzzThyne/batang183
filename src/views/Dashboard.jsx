@@ -32,14 +32,17 @@ const Dashboard = () => {
 
   return (
     <>
-      <header className="bg-blue-500 text-white rounded-md py-4">
-        <div className="container mx-auto flex items-center justify-center">
-          <h1 className="text-2xl font-semibold">Dashboard</h1>
+      <header className="md: bg-green-500 md:rounded-md">
+        <div className="container flex p-4">
+          <h1 className="text-2xl font-semibold">Hello Admin</h1>
         </div>
       </header>
       <main className="container mx-auto">
         <div className="bg-white p-4 md:p-8">
-          <h2 className="text-2xl font-semibold mb-4">Users</h2>
+          <div className="flex justify-between">
+            <h2 className="text-2xl font-semibold px-3">Users</h2>
+            <button className="px-3 bg-green-500 rounded-full hover:bg-green-700">Add User</button>
+          </div>
           <div className="flex py-2 pb-10">
             <input
               type="text"

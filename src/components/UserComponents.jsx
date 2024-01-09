@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutAsync } from "../redux/authSlice.js";
+import batang183 from '../assets/batang183.png';
 
 const NavMenu = ({ src, alt, to, title }) => {
   const location = useLocation();
@@ -48,7 +49,10 @@ const UserComponents = () => {
     <>
       <header className="bg-[#004643] text-white py-2">
         <div className="container mx-auto flex justify-between">
-          <h1 className="text-2xl font-semibold p-2">Josephine Yarning</h1>
+          <div className="flex px-2 gap-1">
+            <img src={batang183} alt="" className="w-12 h-12" />
+            <h1 className="text-2xl font-semibold p-2">Batang 183</h1>
+          </div>
           <button onClick={handleLogout} className="px-6">Logout</button>
         </div>
       </header>
