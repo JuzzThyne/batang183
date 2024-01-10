@@ -62,6 +62,21 @@ export const deleteSingleUser = createAsyncThunk('userAuth/deleteUser', async ({
   }
 });
 
+export const addSingleUser = createAsyncThunk('userAuth/addUser', async ({ formData, token }) => {
+  try {
+    const response = await axios.post(`${API_URL}user/add`, formData,  {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log('Response:', response);
+    return response.data;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error.response.data;
+  }
+});
+
 
 const userSlice = createSlice({
   name: 'userAuth',
@@ -123,6 +138,17 @@ const userSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(deleteSingleUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+      .addCase(addSingleUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addSingleUser.fulfilled, (state, action) => {
+        state.error = action.payload.message;
+        state.isLoading = false;
+      })
+      .addCase(addSingleUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       });

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "../redux/userSlice";
 import EditUser from "./EditUser";
 import UserCard from "../reusable-components/UserCard";
+import AddUser from "./AddUser";
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -30,6 +31,16 @@ const Dashboard = () => {
     setIsModalOpen(false);
   };
 
+  const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
+
+  const handleAddUserModalOpen = () => {
+    setIsAddUserModalOpen(true);
+  };
+
+  const handleAddUserModalClose = () => {
+    setIsAddUserModalOpen(false);
+  };
+
   return (
     <>
       <header className="md: bg-green-500 md:rounded-md">
@@ -41,8 +52,11 @@ const Dashboard = () => {
         <div className="bg-white p-4 md:p-8">
           <div className="flex justify-between">
             <h2 className="text-2xl font-semibold px-3">Users</h2>
-            <button className="px-3 bg-green-500 rounded-full hover:bg-green-700">Add User</button>
+            <button className="px-3 bg-green-500 rounded-full hover:bg-green-700" onClick={handleAddUserModalOpen}>Add User</button>
           </div>
+          {
+            isAddUserModalOpen && (<AddUser onClose={handleAddUserModalClose}/>)
+          }
           <div className="flex py-2 pb-10">
             <input
               type="text"
