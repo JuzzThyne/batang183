@@ -142,7 +142,14 @@ const AddUser = ({ onClose }) => {
               <option value="1583-B">1583-B</option>
               {/* Add more options as needed */}
             </select>
-            <button type="submit">Submit</button>
+            <div className="pt-2 flex">
+              <button
+                type="submit"
+                className="bg-green-400 mx-auto px-4 py-2 rounded-lg"
+              >
+                Submit
+              </button>
+            </div>
           </form>
         </div>
       </div>
