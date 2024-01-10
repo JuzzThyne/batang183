@@ -29,6 +29,7 @@ const Dashboard = () => {
   const handleCloseModal = () => {
     setSelectedUserId(null);
     setIsModalOpen(false);
+    window.location.reload();
   };
 
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
@@ -77,7 +78,7 @@ const Dashboard = () => {
                 {users.map((user) => (
                   <UserCard
                     key={user._id}
-                    fullname={`${user.first_name} ${user.middle_name} ${user.last_name}`}
+                    fullname={`${user.last_name}, ${user.first_name} ${user.middle_name}`}
                     address={user.address}
                     gender={user.gender}
                     precinctNumber={user.precinct_number}

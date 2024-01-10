@@ -35,11 +35,11 @@ const UserCard = ({
             <p className="text-[11px] md:text-xl">{address}</p>
           </div>
           <div className="flex gap-8">
-            <div className="flex gap-2 justify-start items-center">
+            <div className="flex gap-2 justify-start items-center w-1/4">
               <img src={genderIcon} alt="" className="w-[11px] h-[11px] md:w-[20px] md:h-[20px]" />
               <p className="text-[11px] md:text-xl">{gender}</p>
             </div>
-            <div className="flex gap-2 justify-start items-center">
+            <div className="flex gap-2 justify-start items-center w-1/4">
               <img src={ballot} alt="" className="w-[11px] h-[11px] md:w-[20px] md:h-[20px]" />
               <p className="text-[11px] md:text-xl">{precinctNumber}</p>
             </div>

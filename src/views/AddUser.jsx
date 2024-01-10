@@ -5,22 +5,21 @@ import { addSingleUser } from "../redux/userSlice";
 import AlertComponent from "../reusable-components/AlertComponent";
 
 const AddUser = ({ onClose }) => {
+  const [isAlertVisible, setIsAlertVisible] = useState(false); // New state for alert visibility
 
-    const [isAlertVisible, setIsAlertVisible] = useState(false); // New state for alert visibility
-    
-    const dispatch = useDispatch();
-    const token = useSelector((state) => state.auth.token);
-    const { isLoading, error } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.auth.token);
+  const { isLoading, error } = useSelector((state) => state.user);
 
-    const initialFormData = {
-        first_name: "",
-        middle_name: "",
-        last_name: "",
-        gender: "",
-        address: "",
-        contact: "",
-        precinct_number: "",
-      };
+  const initialFormData = {
+    first_name: "",
+    middle_name: "",
+    last_name: "",
+    gender: "",
+    address: "",
+    contact: "",
+    precinct_number: "",
+  };
 
   const [formData, setFormData] = useState(initialFormData);
 
@@ -53,17 +52,15 @@ const AddUser = ({ onClose }) => {
               <img src={closeButton} alt="" className="w-8 h-8" />
             </button>
           </div>
-          {
-            isLoading && <p>Loading ... </p>
-          }
+          {isLoading && <p>Loading ... </p>}
           {error && (
-          <AlertComponent
-            alertData={error}
-            isVisible={isAlertVisible}
-            onClose={closeAlert}
-            color="green"
-          />
-            )}
+            <AlertComponent
+              alertData={error}
+              isVisible={isAlertVisible}
+              onClose={closeAlert}
+              color="green"
+            />
+          )}
           <form onSubmit={handleSubmit} className="flex flex-col">
             <label htmlFor="firstname">Firstname</label>
             <input
@@ -93,14 +90,28 @@ const AddUser = ({ onClose }) => {
               onChange={handleChange}
             />
             <label htmlFor="gender">Gender</label>
-            <input
-              type="text"
-              id="gender"
-              name="gender"
-              className="border-green-400 border rounded-md px-2"
-              value={formData.gender}
-              onChange={handleChange}
-            />
+            <div className="flex gap-3">
+              <label className="flex gap-1">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="male"
+                  checked={formData.gender === "male"}
+                  onChange={handleChange}
+                />
+                Male
+              </label>
+              <label className="flex gap-1">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="female"
+                  checked={formData.gender === "female"}
+                  onChange={handleChange}
+                />
+                Female
+              </label>
+            </div>
             <label htmlFor="address">Address</label>
             <textarea
               rows="3"
@@ -119,14 +130,18 @@ const AddUser = ({ onClose }) => {
               onChange={handleChange}
             />
             <label htmlFor="precinct_no">Precinct No</label>
-            <input
-              type="text"
+            <select
               id="precinct_number"
               name="precinct_number"
               className="border-green-400 border rounded-md px-2"
               value={formData.precinct_number}
               onChange={handleChange}
-            />
+            >
+              {/* Add options for precinct numbers here */}
+              <option value="1583-A">1583-A</option>
+              <option value="1583-B">1583-B</option>
+              {/* Add more options as needed */}
+            </select>
             <button type="submit">Submit</button>
           </form>
         </div>
