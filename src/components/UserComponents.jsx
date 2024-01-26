@@ -5,6 +5,8 @@ import { logoutAsync } from "../redux/authSlice.js";
 import batang183 from "../assets/batang183.png";
 import hamburger from "../assets/menu.svg";
 import x from "../assets/x.svg";
+import home from "../assets/home.svg";
+import setting from "../assets/settings.svg";
 
 const NavMenu = ({ src, alt, to, title }) => {
   const location = useLocation();
@@ -47,8 +49,8 @@ const UserComponents = () => {
     }
   };
   const navMenuList = [
-    { src: "", alt: "", to: "/dashboard", title: "Dashboard" },
-    { src: "", alt: "", to: "/account", title: "Account Setting" },
+    { src: home, alt: "", to: "/dashboard", title: "Dashboard" },
+    { src: setting, alt: "", to: "/account", title: "Account Setting" },
   ];
 
   return (
@@ -59,7 +61,7 @@ const UserComponents = () => {
             <img src={batang183} alt="" className="w-12 h-12" />
             <h1 className="text-2xl font-semibold p-2">Batang 183</h1>
           </div>
-          <div className="p-2 flex justify-center items-center">
+          <div className="p-2 flex justify-center items-center md:hidden">
             <div className="relative inline-block text-left">
               <div>
                 <button
@@ -146,6 +148,7 @@ const UserComponents = () => {
             </nav>
           </aside>
         </div>
+        <div class="border-l h-screen mx-4 hidden md:block"></div>
         <div className="w-full md:w-3/4 bg-white md:p-8">
           <Outlet />
         </div>
