@@ -103,7 +103,7 @@ const Dashboard = () => {
               </span>
               <button
                 className="px-2 py-1 bg-blue-500 text-white rounded-md"
-                disabled={currentPage === 1}
+                disabled={parseInt(currentPage) == 1}
                 onClick={() =>
                   dispatch(
                     fetchUsers({ searchTerm, token, page: currentPage - 1 })
@@ -114,10 +114,10 @@ const Dashboard = () => {
               </button>
               <button
                 className="px-2 py-1 ml-2 bg-blue-500 text-white rounded-md"
-                disabled={currentPage === totalPages}
+                disabled={parseInt(currentPage) == parseInt(totalPages)}
                 onClick={() =>
                   dispatch(
-                    fetchUsers({ searchTerm, token, page: currentPage + 1 })
+                    fetchUsers({ searchTerm, token, page: parseInt(currentPage) + 1 })
                   )
                 }
               >

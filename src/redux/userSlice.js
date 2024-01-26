@@ -6,14 +6,15 @@ const API_URL = 'https://batang183-backend.vercel.app/';
 
 export const fetchUsers = createAsyncThunk('userAuth/fetchUsers', async ({ searchTerm, token, page = 1, limit = 10 }) => {
   try {
-    const response = await axios.post(`${API_URL}user`, { searchTerm, page, limit }, {
-      headers: {
-        Authorization: `Bearer ${token}`, // Note the "Bearer" prefix
-      },
-    });
-    return response.data;
+      const response = await axios.get(`${API_URL}user`, {
+          params: { searchTerm, page, limit }, // Use params instead of data
+          headers: {
+              Authorization: `Bearer ${token}`, // Note the "Bearer" prefix
+          },
+      });
+      return response.data;
   } catch (error) {
-    throw error.response.data;
+      throw error.response.data;
   }
 });
 
