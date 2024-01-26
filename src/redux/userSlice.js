@@ -1,12 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-
-// const API_URL = 'http://localhost:5555/';
-const API_URL = 'https://batang183-backend.vercel.app/';
+import config from './config';
 
 export const fetchUsers = createAsyncThunk('userAuth/fetchUsers', async ({ searchTerm, token, page = 1, limit = 10 }) => {
   try {
-      const response = await axios.get(`${API_URL}user`, {
+      const response = await axios.get(`${config.API_URL}user`, {
           params: { searchTerm, page, limit }, // Use params instead of data
           headers: {
               Authorization: `Bearer ${token}`, // Note the "Bearer" prefix
@@ -20,7 +18,7 @@ export const fetchUsers = createAsyncThunk('userAuth/fetchUsers', async ({ searc
 
 export const getSingleUser = createAsyncThunk('userAuth/getUser', async ({ userId, token }) => {
   try {
-    const response = await axios.get(`${API_URL}user/${userId}`, {
+    const response = await axios.get(`${config.API_URL}user/${userId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -35,7 +33,7 @@ export const getSingleUser = createAsyncThunk('userAuth/getUser', async ({ userI
 
 export const updateSingleUser = createAsyncThunk('userAuth/updateUser', async ({ userId, formData, token }) => {
   try {
-    const response = await axios.put(`${API_URL}user/${userId}` , formData , {
+    const response = await axios.put(`${config.API_URL}user/${userId}` , formData , {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -50,7 +48,7 @@ export const updateSingleUser = createAsyncThunk('userAuth/updateUser', async ({
 
 export const deleteSingleUser = createAsyncThunk('userAuth/deleteUser', async ({ userId, token }) => {
   try {
-    const response = await axios.delete(`${API_URL}user/${userId}`, {
+    const response = await axios.delete(`${config.API_URL}user/${userId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
