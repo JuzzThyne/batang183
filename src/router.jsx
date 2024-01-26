@@ -5,6 +5,9 @@ import NotFound from "./views/NotFound";
 import UserComponents from "./components/UserComponents";
 import Dashboard from "./views/Dashboard";
 import AccountSetting from "./views/AccountSetting";
+import AddPrecinctNumber from "./views/AddPrecinctNumber";
+import EditAccount from "./views/EditAccount";
+import AddAdmin from "./views/AddAdmin";
 
 const router = createBrowserRouter(
     [
@@ -23,6 +26,21 @@ const router = createBrowserRouter(
                 {
                     path: '/account',
                     element: <AccountSetting/>,
+                    children: [
+                        {
+                            path: 'account/add-precinct-number',
+                            element: <AddPrecinctNumber/>
+                        },
+                        {
+                            path: 'account/edit-account',
+                            element: <EditAccount/>
+                        },
+                        {
+                            path: 'account/add-admin',
+                            element: <AddAdmin/>
+                        },
+
+                    ]
                 },
             ]
         },

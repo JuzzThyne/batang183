@@ -1,3 +1,11 @@
 @tailwind base; 
 @tailwind components; 
 @tailwind utilities;
+
+.glow-static {
+    filter: brightness(150%)  drop-shadow(0 0 10px rgba(2, 184, 2, 0.8));
+  }
+
+.hover\:glow-hover:hover {
+    filter: brightness(190%)  drop-shadow(0 0 15px rgba(0, 255, 0, 1));
+}
