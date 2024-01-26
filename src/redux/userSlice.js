@@ -63,7 +63,7 @@ export const deleteSingleUser = createAsyncThunk('userAuth/deleteUser', async ({
 
 export const addSingleUser = createAsyncThunk('userAuth/addUser', async ({ formData, token }) => {
   try {
-    const response = await axios.post(`${API_URL}user/add`, formData,  {
+    const response = await axios.post(`${config.API_URL}user/add`, formData,  {
       headers: {
         Authorization: `Bearer ${token}`,
       },
