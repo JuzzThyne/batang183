@@ -110,7 +110,6 @@ const UserComponents = () => {
                     >
                       Account Settings
                     </Link>
-                    <form method="POST" action="#" role="none">
                       <button
                         type="submit"
                         className="text-gray-700 block w-full px-4 py-2 text-left text-sm"
@@ -121,7 +120,6 @@ const UserComponents = () => {
                       >
                         Sign out
                       </button>
-                    </form>
                   </div>
                 </div>
               )}
