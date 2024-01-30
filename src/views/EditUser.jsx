@@ -10,6 +10,7 @@ import AlertComponent from "../reusable-components/AlertComponent";
 import closeButton from "../assets/x-square.svg";
 
 const EditUser = ({ selectedUserId, handleCloseModal }) => {
+
   const [isAlertVisible, setIsAlertVisible] = useState(false); // New state for alert visibility
 
   const dispatch = useDispatch();
@@ -48,6 +49,8 @@ const EditUser = ({ selectedUserId, handleCloseModal }) => {
         address: singleUser.address || "",
         contact: singleUser.contact || "",
         precinct_number: singleUser.precinct_number || "",
+        birthdate: singleUser.birthdate || "",
+        age: singleUser.age || "",
       });
     }
   }, [singleUser]);

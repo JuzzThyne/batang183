@@ -23,7 +23,6 @@ export const getSingleUser = createAsyncThunk('userAuth/getUser', async ({ userI
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log('Response:', response);
     return response.data;
   } catch (error) {
     console.error('Error:', error);
@@ -38,7 +37,7 @@ export const updateSingleUser = createAsyncThunk('userAuth/updateUser', async ({
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log('Response:', response);
+
     return response.data;
   } catch (error) {
     console.error('Error:', error);
@@ -53,7 +52,6 @@ export const deleteSingleUser = createAsyncThunk('userAuth/deleteUser', async ({
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log('Response:', response);
     return response.data;
   } catch (error) {
     console.error('Error:', error);
@@ -68,7 +66,6 @@ export const addSingleUser = createAsyncThunk('userAuth/addUser', async ({ formD
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log('Response:', response);
     return response.data;
   } catch (error) {
     console.error('Error:', error);

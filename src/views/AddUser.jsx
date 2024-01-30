@@ -18,6 +18,7 @@ const AddUser = ({ onClose }) => {
     middle_name: "",
     last_name: "",
     gender: "",
+    birthdate: "",
     address: "",
     contact: "",
     precinct_number: "",
@@ -62,6 +63,7 @@ const AddUser = ({ onClose }) => {
 
     // If all fields are not empty, proceed to dispatch
     console.log("Form submitted:", formData);
+    console.log("Birthday:", formData.birthday);
     setFormData(initialFormData);
   };
   const closeAlert = () => {
@@ -152,6 +154,17 @@ const AddUser = ({ onClose }) => {
                 Female
               </label>
             </div>
+            <label htmlFor="birthday">Birthday</label>
+            <input
+              type="date"
+              id="birthdate"
+              name="birthdate"
+              className={`border-green-400 border rounded-md px-2 ${
+                emptyFields.includes("birthdate") ? "border-red-400" : ""
+              }`}
+              value={formData.birthdate}
+              onChange={handleChange}
+            />
             <label htmlFor="address">Address</label>
             <textarea
               rows="3"

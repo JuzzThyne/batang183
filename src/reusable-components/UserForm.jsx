@@ -1,6 +1,27 @@
 import React from "react";
 
 const UserForm = ({ user, isEditMode, onInputChange }) => {
+  const formatDate = (dateString) => {
+    if (!dateString) {
+      return ""; // Handle cases where dateString is empty or undefined
+    }
+
+    const date = new Date(dateString);
+
+    // Ensure that the date is valid
+    if (isNaN(date.getTime())) {
+      return ""; // Return empty string for invalid dates
+    }
+
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  };
+
+  const userAge = parseInt(user.age, 10); // Convert user.age to an integer
+
   return (
     <form action="" className="flex flex-col">
       <label htmlFor="firstname">Firstname</label>
@@ -58,6 +79,16 @@ const UserForm = ({ user, isEditMode, onInputChange }) => {
           Female
         </label>
       </div>
+      <label htmlFor="birthday">Birthday</label>
+      <input
+        type="date"
+        id="birthdate"
+        name="birthdate"
+        className="border-green-400 border rounded-md px-2"
+        value={formatDate(user.birthdate)}
+        disabled={!isEditMode}
+        onChange={onInputChange}
+      />
       <label htmlFor="address">Address</label>
       <textarea
         rows="3"
@@ -100,10 +131,15 @@ const UserForm = ({ user, isEditMode, onInputChange }) => {
           value={user.precinct_number}
           onChange={onInputChange}
         >
-          {/* Add options for precinct numbers here */}
-          <option value="1583-A">1583-A</option>
-          <option value="1583-B">1583-B</option>
-          {/* Add more options as needed */}
+          {userAge >= 30 ? (
+            <>
+              <option value="" disabled defaultValue>
+                Select Precinct No
+              </option>
+              <option value="1583-A">1583-A</option>
+              <option value="1583-B">1583-B</option>
+            </>
+          ) : null}
         </select>
       )}
     </form>
