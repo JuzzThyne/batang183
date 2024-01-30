@@ -29,7 +29,6 @@ const Dashboard = () => {
   const handleCloseModal = () => {
     setSelectedUserId(null);
     setIsModalOpen(false);
-    window.location.reload();
   };
 
   const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
@@ -39,6 +38,7 @@ const Dashboard = () => {
   };
 
   const handleAddUserModalClose = () => {
+    dispatch(fetchUsers({ searchTerm, token }));
     setIsAddUserModalOpen(false);
   };
 

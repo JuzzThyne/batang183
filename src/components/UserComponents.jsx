@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logoutAsync } from "../redux/authSlice.js";
+import { getUser, logoutAsync } from "../redux/authSlice.js";
 import batang183 from "../assets/batang183.png";
 import hamburger from "../assets/menu.svg";
 import x from "../assets/x.svg";
@@ -34,11 +34,22 @@ const UserComponents = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
+  const validated = useSelector((state) => state.auth.validated);
   useEffect(() => {
-    if (!token) {
+    // console.log('validated in useEffect:', validated);
+    if (!validated) {
+        // console.log(token)
+        // console.log(admin)
+        dispatch(getUser({ token }));
+    }
+  }, [token, validated, dispatch]);
+  useEffect(() => {
+    if (!token || !validated) {
       navigate("/login");
     }
   }, [token, navigate]);
+
+  
 
   const handleLogout = async () => {
     try {
@@ -148,7 +159,7 @@ const UserComponents = () => {
             </nav>
           </aside>
         </div>
-        <div class="border-l h-screen mx-4 hidden md:block"></div>
+        <div className="border-l h-screen mx-4 hidden md:block"></div>
         <div className="w-full md:w-3/4 bg-white md:p-8">
           <Outlet />
         </div>

@@ -2,6 +2,20 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import config from './config';
 
+export const getUser = createAsyncThunk('adminAuth/getUser', async ({token}) => {
+  try {
+      const response = await axios.get(`${config.API_URL}admin/check-session/${token}`, {
+          // params: { token }, // Use params instead of data
+          headers: {
+              Authorization: `Bearer ${token}`, // Note the "Bearer" prefix
+          },
+      });
+      return response.data;
+  } catch (error) {
+      throw error.response.data;
+  }
+});
+
 export const loginAsync = createAsyncThunk('adminAuth/login', async (credentials) => {
   try {
     const response = await axios.post(`${config.API_URL}admin/login`, credentials );
@@ -30,10 +44,40 @@ const authSlice = createSlice({
     token: sessionStorage.getItem('SecretToken') || null,
     error: null,
     isLoading: false,
+    authenticate: false,
+    validated: sessionStorage.getItem('Validated') || null,
+    adminId: null,
+    adminType: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(getUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.adminId = action.payload.admin;
+        state.adminType = action.payload.adminUser;
+        state.isLoading = false;
+        state.error = null;
+
+        // Check if the user is active or inactive
+        if (action.payload.validated === "active") {
+          state.validated = action.payload.validated;
+          state.adminId = action.payload.admin;
+          sessionStorage.setItem('Validated', action.payload.validated);
+        } else {
+          state.validated = null;
+        }
+      })
+      .addCase(getUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.token = null;
+        state.error = action.error.message;
+
+        // Remove the token from localStorage
+        sessionStorage.removeItem('SecretToken');
+      })
       .addCase(loginAsync.pending, (state) => {
         state.isLoading = true;
       })
@@ -55,6 +99,7 @@ const authSlice = createSlice({
       .addCase(logoutAsync.fulfilled, (state, action) => {
         // Remove the token from localStorage
         sessionStorage.removeItem('SecretToken');
+        sessionStorage.removeItem('Validated');
         state.error = action.payload.message;
 
       })

@@ -11,6 +11,8 @@ const AddUser = ({ onClose }) => {
   const token = useSelector((state) => state.auth.token);
   const { isLoading, error } = useSelector((state) => state.user);
 
+  const [emptyFields, setEmptyFields] = useState([]); // Updated state to track empty fields
+
   const initialFormData = {
     first_name: "",
     middle_name: "",
@@ -29,14 +31,38 @@ const AddUser = ({ onClose }) => {
       ...prevData,
       [name]: value,
     }));
+    // Clear the emptyFields state when the user starts typing in any field
+    setEmptyFields([]);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+
     dispatch(addSingleUser({ formData, token }));
-    setFormData(initialFormData);
     setIsAlertVisible(true);
+
+    const newEmptyFields = [];
+
+    // Check if any field is empty
+    for (const key in formData) {
+      if (formData[key] === "") {
+        newEmptyFields.push(key);
+      }
+    }
+
+    if (newEmptyFields.includes("gender") && formData["gender"] === "") {
+      newEmptyFields.push("gender");
+    }
+
+    // If any field is empty, update the emptyFields state
+    if (newEmptyFields.length > 0) {
+      setEmptyFields(newEmptyFields);
+      return;
+    }
+
+    // If all fields are not empty, proceed to dispatch
+    console.log("Form submitted:", formData);
+    setFormData(initialFormData);
   };
   const closeAlert = () => {
     setIsAlertVisible(false);
@@ -67,7 +93,9 @@ const AddUser = ({ onClose }) => {
               type="text"
               id="first_name"
               name="first_name"
-              className="border-green-400 border rounded-md px-2"
+              className={`border-green-400 border rounded-md px-2 ${
+                emptyFields.includes("first_name") ? "border-red-400" : ""
+              }`}
               value={formData.first_name}
               onChange={handleChange}
             />
@@ -76,7 +104,9 @@ const AddUser = ({ onClose }) => {
               type="text"
               id="middle_name"
               name="middle_name"
-              className="border-green-400 border rounded-md px-2"
+              className={`border-green-400 border rounded-md px-2 ${
+                emptyFields.includes("middle_name") ? "border-red-400" : ""
+              }`}
               value={formData.middle_name}
               onChange={handleChange}
             />
@@ -85,13 +115,19 @@ const AddUser = ({ onClose }) => {
               type="text"
               id="last_name"
               name="last_name"
-              className="border-green-400 border rounded-md px-2"
+              className={`border-green-400 border rounded-md px-2 ${
+                emptyFields.includes("last_name") ? "border-red-400" : ""
+              }`}
               value={formData.last_name}
               onChange={handleChange}
             />
             <label htmlFor="gender">Gender</label>
             <div className="flex gap-3">
-              <label className="flex gap-1">
+              <label
+                className={`flex gap-1 ${
+                  emptyFields.includes("gender") ? "text-red-400" : ""
+                }`}
+              >
                 <input
                   type="radio"
                   name="gender"
@@ -101,7 +137,11 @@ const AddUser = ({ onClose }) => {
                 />
                 Male
               </label>
-              <label className="flex gap-1">
+              <label
+                className={`flex gap-1 ${
+                  emptyFields.includes("gender") ? "text-red-400" : ""
+                }`}
+              >
                 <input
                   type="radio"
                   name="gender"
@@ -116,7 +156,9 @@ const AddUser = ({ onClose }) => {
             <textarea
               rows="3"
               name="address"
-              className="border-green-400 border rounded-md px-2"
+              className={`border-green-400 border rounded-md px-2 ${
+                emptyFields.includes("address") ? "border-red-400" : ""
+              }`}
               value={formData.address}
               onChange={handleChange}
             />
@@ -125,7 +167,9 @@ const AddUser = ({ onClose }) => {
               type="number"
               id="contact"
               name="contact"
-              className="border-green-400 border rounded-md px-2"
+              className={`border-green-400 border rounded-md px-2 ${
+                emptyFields.includes("contact") ? "border-red-400" : ""
+              }`}
               value={formData.contact}
               onChange={handleChange}
             />
@@ -133,11 +177,16 @@ const AddUser = ({ onClose }) => {
             <select
               id="precinct_number"
               name="precinct_number"
-              className="border-green-400 border rounded-md px-2"
+              className={`border-green-400 border rounded-md px-2 ${
+                emptyFields.includes("precinct_number") ? "border-red-400" : ""
+              }`}
               value={formData.precinct_number}
               onChange={handleChange}
             >
               {/* Add options for precinct numbers here */}
+              <option value="" disabled defaultValue>
+                Select Precinct No
+              </option>
               <option value="1583-A">1583-A</option>
               <option value="1583-B">1583-B</option>
               {/* Add more options as needed */}

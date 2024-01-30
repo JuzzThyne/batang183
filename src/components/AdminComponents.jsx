@@ -6,12 +6,12 @@ import { useSelector } from 'react-redux';
 const AdminComponents = () => {
     const navigate = useNavigate();
     const token = useSelector((state) => state.auth.token);
-
+    const validated = useSelector((state) => state.auth.validated);
     useEffect(() => {
-        if (token) {
+        if (token || validated) {
             navigate("/");
         }
-    }, [token, navigate]);
+    }, [token,validated, navigate]);
 
     return (
         <div className='w-full h-screen bg-[#004643] flex justify-center items-center'>
