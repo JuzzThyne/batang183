@@ -2,6 +2,12 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import config from './config';
 
+
+// Utility function to remove items from session storage
+const removeSessionItem = (keys) => {
+  keys.forEach((key) => sessionStorage.removeItem(key));
+};
+
 export const getUser = createAsyncThunk('adminAuth/getUser', async ({token}) => {
   try {
       const response = await axios.get(`${config.API_URL}admin/check-session/${token}`, {
@@ -73,10 +79,8 @@ const authSlice = createSlice({
       .addCase(getUser.rejected, (state, action) => {
         state.isLoading = false;
         state.token = null;
-        state.error = action.error.message;
-
-        // Remove the token from localStorage
-        sessionStorage.removeItem('SecretToken');
+        // Remove session items
+        removeSessionItem(['SecretToken', 'Validated']);
       })
       .addCase(loginAsync.pending, (state) => {
         state.isLoading = true;
@@ -92,16 +96,13 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.token = null;
         state.error = action.error.message;
-
-        // Remove the token from localStorage
-        sessionStorage.removeItem('SecretToken');
+        // Remove session items
+        removeSessionItem(['SecretToken', 'Validated']);
       })
       .addCase(logoutAsync.fulfilled, (state, action) => {
-        // Remove the token from localStorage
-        sessionStorage.removeItem('SecretToken');
-        sessionStorage.removeItem('Validated');
+        // Remove session items
+        removeSessionItem(['SecretToken', 'Validated']);
         state.error = action.payload.message;
-
       })
       .addCase(logoutAsync.rejected, (state, action) => {
         state.error = action.error.message;

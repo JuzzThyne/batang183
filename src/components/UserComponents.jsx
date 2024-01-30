@@ -35,6 +35,7 @@ const UserComponents = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   const validated = useSelector((state) => state.auth.validated);
+
   useEffect(() => {
     // console.log('validated in useEffect:', validated);
     if (!validated) {
@@ -44,12 +45,22 @@ const UserComponents = () => {
     }
   }, [token, validated, dispatch]);
   useEffect(() => {
+    
     if (!token || !validated) {
       navigate("/login");
     }
-  }, [token, navigate]);
+  }, [token,validated, navigate]);
 
-  
+  useEffect(() => {
+    // Check if data exists in sessionStorage
+    const validateSessionStorageData = sessionStorage.getItem("Validated"); 
+    const tokenSessionStorageData = sessionStorage.getItem("SecretToken");
+    if (!tokenSessionStorageData) {
+      if(validateSessionStorageData){
+        sessionStorage.clear();
+      }
+    }
+  }, []);
 
   const handleLogout = async () => {
     try {
