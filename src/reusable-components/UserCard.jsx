@@ -10,6 +10,7 @@ const UserCard = ({
   fullname,
   address,
   gender,
+  age,
   precinctNumber,
   profileImageUrl,
   onViewClick,
@@ -42,6 +43,9 @@ const UserCard = ({
             <div className="flex gap-2 justify-start items-center">
               <img src={ballot} alt="" className="w-[11px] h-[11px] md:w-[20px] md:h-[20px]" />
               <p className="text-[11px] md:text-xl">{precinctNumber}</p>
+            </div>
+            <div className="flex gap-2 justify-start items-center">
+              <p className="text-[11px] md:text-xl"><b>Age:</b> {age}</p>
             </div>
           </div>
         </div>

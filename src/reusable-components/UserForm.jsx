@@ -1,6 +1,49 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { getPrecinct } from "../redux/precinctSlice.js";
+import { useDispatch, useSelector } from "react-redux";
 
 const UserForm = ({ user, isEditMode, onInputChange }) => {
+  const dispatch = useDispatch();
+
+  const precinctOptions = [
+    { value: "1583-A", label: "1583-A" },
+    { value: "1583-B", label: "1583-B" },
+    { value: "1583-C", label: "1583-C" },
+    { value: "1584-A", label: "1584-A" },
+    { value: "1584-B", label: "1584-B" },
+    { value: "1585-A", label: "1585-A" },
+    { value: "1586-A", label: "1586-A" },
+    { value: "1586-B", label: "1586-B" },
+    { value: "1587-A", label: "1587-A" },
+    { value: "1587-B", label: "1587-B" },
+    { value: "1588-A", label: "1588-A" },
+    { value: "1588-B", label: "1588-B" },
+    { value: "1589-A", label: "1589-A" },
+    { value: "1589-B", label: "1589-B" },
+    { value: "1589-C", label: "1589-C" },
+    { value: "1589-P1", label: "1589-P1" },
+  ];
+
+  const skPrecinctOptions = [
+    { value: "SK1583A", label: "SK1583A" },
+    { value: "SK1583B", label: "SK1583B" },
+    { value: "SK1583C", label: "SK1583C" },
+    { value: "SK1584A", label: "SK1584A" },
+    { value: "SK1584B", label: "SK1584B" },
+    { value: "SK1585A", label: "SK1585A" },
+    { value: "SK1585B", label: "SK1585B" },
+    { value: "SK1586A", label: "SK1586A" },
+    { value: "SK1586B", label: "SK1586B" },
+    { value: "SK1587A", label: "SK1587A" },
+    { value: "SK1587B", label: "SK1587B" },
+    { value: "SK1588A", label: "SK1588A" },
+    { value: "SK1588B", label: "SK1588B" },
+    { value: "SK1589A", label: "SK1589A" },
+    { value: "SK1589B", label: "SK1589B" },
+    { value: "SK1589C", label: "SK1589C" },
+    { value: "SK1589P1", label: "SK1589P1" },
+  ];
+
   const formatDate = (dateString) => {
     if (!dateString) {
       return ""; // Handle cases where dateString is empty or undefined
@@ -19,8 +62,16 @@ const UserForm = ({ user, isEditMode, onInputChange }) => {
 
     return `${year}-${month}-${day}`;
   };
+  
+  useEffect(() => {
+    // Check if user.precinct_type has changed before dispatching the action
+    if (user.precinct_type) {
+      dispatch(getPrecinct(user.precinct_type));
+    }
+  }, [user.precinct_type]); // Include user.precinct_type in the dependency array
 
-  const userAge = parseInt(user.age, 10); // Convert user.age to an integer
+  const list = useSelector((state) => state.precinct.list);
+  console.log(user.precinct_type);
 
   return (
     <form action="" className="flex flex-col">
@@ -131,15 +182,15 @@ const UserForm = ({ user, isEditMode, onInputChange }) => {
           value={user.precinct_number}
           onChange={onInputChange}
         >
-          {userAge >= 30 ? (
-            <>
-              <option value="" disabled defaultValue>
-                Select Precinct No
-              </option>
-              <option value="1583-A">1583-A</option>
-              <option value="1583-B">1583-B</option>
-            </>
-          ) : null}
+          <option value="" defaultValue className="bg-slate-300">
+            Select Precinct No
+          </option>
+          {list &&
+                list.map((option) => (
+                  <option key={option._id} value={option.precinct_number}>
+                    {option.precinct_number}
+                  </option>
+                ))}
         </select>
       )}
     </form>

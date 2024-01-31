@@ -82,6 +82,7 @@ const Dashboard = () => {
                     address={user.address}
                     gender={user.gender}
                     precinctNumber={user.precinct_number}
+                    age={user.age}
                     onViewClick={() => handleEdit(user._id)}
                   />
                 ))}

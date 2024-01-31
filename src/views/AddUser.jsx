@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import closeButton from "../assets/x-square.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { addSingleUser } from "../redux/userSlice";
 import AlertComponent from "../reusable-components/AlertComponent";
+import { getPrecinct } from "../redux/precinctSlice";
 
 const AddUser = ({ onClose }) => {
   const [isAlertVisible, setIsAlertVisible] = useState(false); // New state for alert visibility
@@ -62,13 +63,19 @@ const AddUser = ({ onClose }) => {
     }
 
     // If all fields are not empty, proceed to dispatch
-    console.log("Form submitted:", formData);
-    console.log("Birthday:", formData.birthday);
+    // console.log("Form submitted:", formData);
+    // console.log("Birthday:", formData.birthday);
     setFormData(initialFormData);
   };
   const closeAlert = () => {
     setIsAlertVisible(false);
   };
+
+  useEffect(() => {
+    dispatch(getPrecinct("Both"));
+  }, [dispatch]);
+
+  const list = useSelector((state) => state.precinct.list);
 
   return (
     <>
@@ -197,12 +204,16 @@ const AddUser = ({ onClose }) => {
               onChange={handleChange}
             >
               {/* Add options for precinct numbers here */}
-              <option value="" disabled defaultValue>
+              <option value="" defaultValue>
                 Select Precinct No
               </option>
-              <option value="1583-A">1583-A</option>
-              <option value="1583-B">1583-B</option>
-              {/* Add more options as needed */}
+              {/* Options for users aged 30 or above */}
+              {list &&
+                list.map((option) => (
+                  <option key={option._id} value={option.precinct_number}>
+                    {option.precinct_number}
+                  </option>
+                ))}
             </select>
             <div className="pt-2 flex">
               <button

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteSingleUser,
+  fetchUsers,
   getSingleUser,
   updateSingleUser,
 } from "../redux/userSlice";
@@ -10,6 +11,8 @@ import AlertComponent from "../reusable-components/AlertComponent";
 import closeButton from "../assets/x-square.svg";
 
 const EditUser = ({ selectedUserId, handleCloseModal }) => {
+
+  const [fetch, setFetch] = useState(false);
 
   const [isAlertVisible, setIsAlertVisible] = useState(false); // New state for alert visibility
 
@@ -50,7 +53,7 @@ const EditUser = ({ selectedUserId, handleCloseModal }) => {
         contact: singleUser.contact || "",
         precinct_number: singleUser.precinct_number || "",
         birthdate: singleUser.birthdate || "",
-        age: singleUser.age || "",
+        precinct_type: singleUser.precinct_type || "",
       });
     }
   }, [singleUser]);
@@ -69,6 +72,7 @@ const EditUser = ({ selectedUserId, handleCloseModal }) => {
       dispatch(updateSingleUser({ userId: selectedUserId, formData, token }));
       setIsEditMode(false);
       setIsAlertVisible(true);
+      setFetch(true);
     }
   };
 
@@ -87,6 +91,13 @@ const EditUser = ({ selectedUserId, handleCloseModal }) => {
       window.location.reload();
     }
   };
+
+  useEffect(() => {
+    if (fetch) {
+      dispatch(fetchUsers({token: token}));
+      setFetch(false);
+    }
+  }, [fetch]);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center">
