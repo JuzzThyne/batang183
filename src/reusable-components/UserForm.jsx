@@ -71,7 +71,6 @@ const UserForm = ({ user, isEditMode, onInputChange }) => {
   }, [user.precinct_type]); // Include user.precinct_type in the dependency array
 
   const list = useSelector((state) => state.precinct.list);
-  console.log(user.precinct_type);
 
   return (
     <form action="" className="flex flex-col">

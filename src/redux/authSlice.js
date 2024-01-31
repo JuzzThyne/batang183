@@ -20,10 +20,6 @@ export const getUser = createAsyncThunk(
           },
         }
       );
-      // Check if you want to log this response or not based on the status code
-      if (response.status !== 200) {
-        console.log(response);
-      }
       return response.data;
     } catch (error) {
       throw error.response.data;
@@ -39,10 +35,6 @@ export const loginAsync = createAsyncThunk(
         `${config.API_URL}admin/login`,
         credentials
       );
-      // Check if you want to log this response or not based on the status code
-      if (response.status !== 200) {
-        console.log(response);
-      }
       return response.data;
     } catch (error) {
       throw error.response.data;
@@ -59,10 +51,6 @@ export const logoutAsync = createAsyncThunk(
           Authorization: `Bearer ${token}`, // Note the "Bearer" prefix
         },
       });
-      // Check if you want to log this response or not based on the status code
-      if (response.status !== 200) {
-        console.log(response);
-      }
       return response.data;
     } catch (error) {
       throw error.response.data;
