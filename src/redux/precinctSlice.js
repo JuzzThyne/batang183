@@ -11,6 +11,15 @@ export const getPrecinct = createAsyncThunk('precinct/getPrecinct', async (preci
       throw error.response.data;
     }
   });
+  export const addPrecinct = createAsyncThunk('precinct/addPrecinct', async ({formData}) => {
+    try {
+      const response = await axios.post(`${config.API_URL}precinct/add`, formData);
+      return response.data;
+    } catch (error) {
+      console.error('Error:', error);
+      throw error.response.data;
+    }
+  });
 
 const precinctSlice = createSlice({
   name: "precinct",
@@ -31,6 +40,17 @@ const precinctSlice = createSlice({
         state.error = null;
       })
       .addCase(getPrecinct.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message;
+      })
+      .addCase(addPrecinct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addPrecinct.fulfilled, (state, action) => {
+        state.error = action.payload.message;
+        state.isLoading = false;
+      })
+      .addCase(addPrecinct.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message;
       });
